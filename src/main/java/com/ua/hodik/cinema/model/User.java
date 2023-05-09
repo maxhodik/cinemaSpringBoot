@@ -20,7 +20,7 @@ public class User {
     @Column(name = "login")
     @NotEmpty
     @Pattern(regexp = "^[A-Za-z0-9_-]{3,16}$")
-    private String login;
+    private String name;
     @Column(name = "password")
     @NotEmpty
     @Pattern(regexp = "^[A-Za-z0-9_-]{5,18}$")
@@ -34,9 +34,9 @@ public class User {
     public User() {
     }
 
-    public User(int id, String login, String password, Role role, List<Receipt> receipts) {
+    public User(int id, String name, String password, Role role, List<Receipt> receipts) {
         this.id = id;
-        this.login = login;
+        this.name = name;
         this.password = password;
         this.role = role;
         this.receipts = receipts;

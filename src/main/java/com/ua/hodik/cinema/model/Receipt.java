@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 
 @Entity
-@Table(name = "receipts")
+@Table(name = "orders")
 @Data
 @Builder
 public class Receipt {
@@ -23,10 +23,11 @@ public class Receipt {
     @JoinColumn(name = "sessions_id", referencedColumnName = "id")
     private Session session;
     @Column(name = "state")
+    @Enumerated(EnumType.STRING)
     private State state;
     @Column(name = "number_of_seats")
     private int numberOfSeats;
     @Column(name = "price")
-    @Value("${price}")
+//    @Value("${price}")
     private int price;
 }
