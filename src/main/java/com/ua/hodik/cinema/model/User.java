@@ -3,8 +3,10 @@ package com.ua.hodik.cinema.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -12,6 +14,8 @@ import java.util.List;
 @Table(name = "users")
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,14 +35,4 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Receipt> receipts;
 
-    public User() {
-    }
-
-    public User(int id, String name, String password, Role role, List<Receipt> receipts) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.role = role;
-        this.receipts = receipts;
-    }
 }

@@ -1,8 +1,10 @@
 package com.ua.hodik.cinema.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 
 
@@ -10,6 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 @Table(name = "orders")
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Receipt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

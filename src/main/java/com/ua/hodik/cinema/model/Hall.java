@@ -2,18 +2,20 @@ package com.ua.hodik.cinema.model;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
 
 @Data
 @Entity
 @Builder
 @Table(name = "halls")
+@AllArgsConstructor
+@NoArgsConstructor
 
 public class Hall {
     @Id
@@ -32,15 +34,4 @@ public class Hall {
     @OneToMany(mappedBy = "hall")
     private List<Session> sessions;
 
-    public Hall() {
-    }
-
-    public Hall(int id, int capacity, int numberAvailableSeats, int numberOfSoldSeats, BigDecimal attendance, List<Session> sessions) {
-        this.id = id;
-        this.capacity = capacity;
-        this.numberAvailableSeats = numberAvailableSeats;
-        this.numberOfSoldSeats = numberOfSoldSeats;
-        this.attendance = attendance;
-        this.sessions = sessions;
-    }
 }

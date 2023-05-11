@@ -2,10 +2,15 @@ package com.ua.hodik.cinema.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDto {
 
 
@@ -18,13 +23,4 @@ public class UserDto {
     private String password;
 
 
-    public UserDto() {
-    }
-
-    public UserDto( String name, String password) {
-
-        this.name = name;
-        this.password = password;
-
-    }
 }

@@ -1,6 +1,6 @@
-package com.ua.hodik.cinema.model;
+package com.ua.hodik.cinema.dto;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -8,25 +8,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-@Entity
-@Table(name = "movies")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Movie {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+public class MovieDto {
     private int id;
-    @Column(name = "name")
     @NotEmpty
     @Pattern(regexp = "^[A-Za-zА-Яа-яіїєґ0-9_]+[A-zA-zА-Яа-яіїєґ0-9_ '-`!?.,-:&;]*", message = "Invalid movie name")
     private String name;
-    //  private Status status;
-    @OneToMany(mappedBy = "movie")
-    private List<Session> sessions;
-
 }
