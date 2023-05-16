@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
+
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

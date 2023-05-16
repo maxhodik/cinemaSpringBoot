@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -31,7 +32,30 @@ public class Hall {
     @Column(name = "attendance")
     private BigDecimal attendance;
 
-    @OneToMany(mappedBy = "hall")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "hall")
     private List<Session> sessions;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Hall hall = (Hall) o;
+        return id == hall.id && capacity == hall.capacity && numberAvailableSeats == hall.numberAvailableSeats && numberOfSoldSeats == hall.numberOfSoldSeats && Objects.equals(attendance, hall.attendance);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, capacity, numberAvailableSeats, numberOfSoldSeats, attendance);
+    }
+
+    @Override
+    public String toString() {
+        return "Hall{" +
+                "id=" + id +
+                ", capacity=" + capacity +
+                ", numberAvailableSeats=" + numberAvailableSeats +
+                ", numberOfSoldSeats=" + numberOfSoldSeats +
+                ", attendance=" + attendance +
+                '}';
+    }
 }

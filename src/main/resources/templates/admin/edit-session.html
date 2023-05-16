@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+<!------ Include the above in your HEAD tag ---------->
+<head>
+    <meta charset="UTF-8">
+    <title>Edit session</title>
+</head>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+<div class="container">
+    <div class="card card-login mx-auto text-center bg-dark">
+        <div class="card-header mx-auto bg-dark">
+            <span> <img src="https://amar.vote/assets/img/amarVotebd.png" class="w-75" alt="Logo"> </span><br/>
+            <span class="logo_title mt-5">Edit session </span>
+            <!--            <h1>--><?php //echo $message?><!--</h1>-->
+
+        </div>
+        <div class="card-body">
+
+            <form name="f" th:method="patch" th:action="@{/schedule-admin/edit/{id}(id=${sessionAdminDto.id})}" th:object="${sessionAdminDto}">
+
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">3
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input type="date" th:field="*{date}" class="form-control" placeholder="Username">
+                    <div style="color:red" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Errors</div>
+                    <br>
+                </div>
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">3
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input type="time" th:field="*{time}" class="form-control" placeholder="time" >
+                    <div style="color:red" th:if="${#fields.hasErrors('time')}" th:errors="*{time}">Errors</div>
+                    <br>
+                </div>
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">3
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input type="number" th:field="*{capacity}" class="form-control" min=1
+                           placeholder="Username">
+                    <div style="color:red" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}">
+                        Errors
+                    </div>
+                    <br>
+                </div>
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">3
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                           role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">movie
+                            <!--                                                <fmt:message key="label.movie"/>-->
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <div th:each="movie:${movieDto}">
+                                <li><input type="radio" th:field="*{movieName}" th:value="${movie.name}">
+                                    <td th:text="${movie.getName()}"></td>
+                                </li>
+                            </div>
+                        </ul>
+                    </li>
+                    <br>
+                </div>
+
+
+                <div class="form-group">
+                    <input type="hidden" th:field="*{hallId}" th:value="${sessionAdminDto.hallId}">
+                    <input type="submit" name="btn" value="Register"
+                           class="btn btn-outline-danger float-right login_btn">
+                </div>
+                <div th:if="${param.error}" style="color: red ">Invalid name
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+</body>
+</html>

@@ -22,7 +22,7 @@ public class MovieValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         MovieDto movieDto = (MovieDto) target;
-        Movie movie = movieService.findByName(movieDto.getName()).orElse(null);
+        MovieDto movie = movieService.findByName(movieDto.getName());
         if (movie != null) {
             errors.rejectValue("name", "", "Movie with this name already exists");
         }

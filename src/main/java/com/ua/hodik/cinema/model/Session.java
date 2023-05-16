@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Data
@@ -26,7 +27,7 @@ public class Session {
     @ManyToOne
     @JoinColumn(name = "movie_id", referencedColumnName = "id")
     private Movie movie;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "hall_id", referencedColumnName = "id")
     private Hall hall;
     @Column(name = "date")
@@ -50,6 +51,17 @@ public class Session {
 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Session session = (Session) o;
+        return id == session.id && Objects.equals(movie, session.movie) && Objects.equals(hall, session.hall) && Objects.equals(date, session.date) && Objects.equals(time, session.time) && status == session.status;
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, movie, hall, date, time, status);
+    }
 }
 
