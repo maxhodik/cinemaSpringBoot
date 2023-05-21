@@ -1,7 +1,8 @@
 package com.ua.hodik.cinema.model;
 
 public enum Role {
-    ADMIN("Admin"), USER ("User");
+
+   ROLE_ADMIN("Admin"), ROLE_USER("User");
 
 
     Role(String name) {

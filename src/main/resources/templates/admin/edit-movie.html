@@ -10,8 +10,9 @@
     <meta charset="UTF-8">
     <title>New movie</title>
 </head>
+<body>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
-<div class="container">
+<div class="container col-3">
     <div class="card card-login mx-auto text-center bg-dark">
         <div class="card-header mx-auto bg-dark">
             <span> <img src="https://amar.vote/assets/img/amarVotebd.png" class="w-75" alt="Logo"> </span><br/>
@@ -21,7 +22,7 @@
         </div>
         <div class="card-body">
 
-            <form name="f" th:method="patch" th:action="@{/movie/{id}(id=${movieDto.getId()})}" th:object="${movieDto}">
+            <form name="f" th:method="patch" th:action="@{/admin/movie/{id}(id=${movieDto.getId()})}" th:object="${movieDto}">
                 <div class="input-group form-group">-->
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>

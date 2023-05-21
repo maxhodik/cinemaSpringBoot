@@ -20,14 +20,15 @@ public class SecurityConfig {
     public SecurityConfig(UserDetailsService userDetails) {
         this.userDetails = userDetails;
     }
-@Bean
+
+    @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests()
-                .anyRequest().permitAll()
-//                .requestMatchers("/admin").hasRole("ADMIN")
-//                .requestMatchers("/auth/register", "/auth/login", "/error","/index", "/cinema/schedule").permitAll()
-//                .anyRequest().hasRole("USER")
+//          .anyRequest().permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/auth/register", "/auth/login", "/error", "/index", "/schedule").permitAll()
+                .anyRequest().hasAnyRole("USER")
                 .and()
                 .formLogin().loginPage("/auth/login")
                 .loginProcessingUrl("/process_login")
@@ -49,6 +50,7 @@ public class SecurityConfig {
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         return daoAuthenticationProvider;
     }
+
 
     @Bean
     protected PasswordEncoder passwordEncoder() {

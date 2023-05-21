@@ -72,7 +72,7 @@
 
 <body>
 
-<form action="movie">
+<form action="/admin/movie">
     <li class="nav-item">
         <a class="btn btn-outline-secondary " aria-current="page"
            href="movie/add-movie">Add new movie
@@ -87,13 +87,13 @@
             <thead>
             <li>
                 <span>
-                    <a th:href="@{/movie(page=${page.number},size=${page.size}, sort=id)}">Id</a>
+                    <a th:href="@{/admin/movie(page=${page.number},size=${page.size}, sort=id)}">Id</a>
                 </span>
 
             </li>
             <li>
                 <span>
-                    <a th:href="@{/movie(page=${page.number},size=${page.size}, sort=name)}">Movie name</a>
+                    <a th:href="@{/admin/movie(page=${page.number},size=${page.size}, sort=name)}">Movie name</a>
                 </span>
 
             </li>
@@ -121,11 +121,11 @@
             <tr>
                 <td th:text="${movie.getId()}"></td>
                 <td>
-                    <a th:href="@{/movie/{id}(id=${movie.getId()})}" th:text="${movie.getName()}">Value</a>
+                    <a th:href="@{/admin/movie/{id}(id=${movie.getId()})}" th:text="${movie.getName()}">Value</a>
 
                 </td>
                 <td>
-                    <form th:method="delete" th:action="@{/movie/{id}(id=${movie.getId()})}">
+                    <form th:method="delete" th:action="@{/admin/movie/{id}(id=${movie.getId()})}">
                         <input type="submit" value="Delete">
                     </form>
 
@@ -138,16 +138,16 @@
 </div>
 <div class="pagination-div">
     <span th:if="${page.hasPrevious()}">
-        <a th:href="@{/movie(page=${page.number - 1}, size=${page.size}, sort=${sort})}">Previous</a>
+        <a th:href="@{/admin/movie(page=${page.number - 1}, size=${page.size}, sort=${sort})}">Previous</a>
     </span>
     <th:block th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}">
         <span class="selected" th:if="${page.number == i}">[[${i}+1]]</span>
         <span th:unless="${page.number == i}">
-             <a th:href="@{/movie(page=${i},size=${page.size}, sort=${sort})}">[[${i}+1]]</a>
+             <a th:href="@{/admin/movie(page=${i},size=${page.size}, sort=${sort})}">[[${i}+1]]</a>
         </span>
     </th:block>
     <span th:if="${page.hasNext()}">
-        <a th:href="@{/movie(page=${page.number + 1},size=${page.size}, sort=${sort})}">Next</a>
+        <a th:href="@{/admin/movie(page=${page.number + 1},size=${page.size}, sort=${sort})}">Next</a>
     </span>
 </div>
 

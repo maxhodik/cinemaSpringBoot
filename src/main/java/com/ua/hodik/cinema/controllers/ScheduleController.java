@@ -2,7 +2,6 @@ package com.ua.hodik.cinema.controllers;
 
 import com.ua.hodik.cinema.dto.FilterFormDto;
 import com.ua.hodik.cinema.dto.SessionAdminDto;
-import com.ua.hodik.cinema.model.Session;
 import com.ua.hodik.cinema.services.MovieService;
 import com.ua.hodik.cinema.services.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +51,16 @@ public class ScheduleController {
         System.out.println(filters);
         // validate searchCriteria
         // scheduleService.search(scheduleService)
-        return "redirect:/schedule";
+        FilterFormDto filterFormDto= (FilterFormDto) model.getAttribute("filterFormDto");
+//        Page<SessionAdminDto> page = scheduleService.findAllWithFilters(pageable,filterFormDto);
+//        model.addAttribute("page", page);
+//        model.addAttribute("movieDto", movieService.findAll(null));
+//        model.addAttribute("filterFormDto", new FilterFormDto());
+//        String sort = page.getSort().stream()
+//                .map(order -> order.getProperty())
+//                .collect(Collectors.joining(","));
+//        model.addAttribute("sort", sort);
+        return "schedule";
     }
 
 

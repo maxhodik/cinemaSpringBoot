@@ -17,4 +17,11 @@ public class MovieDto {
     @NotEmpty
     @Pattern(regexp = "^[A-Za-zА-Яа-яіїєґ0-9_]+[A-zA-zА-Яа-яіїєґ0-9_ '-`!?.,-:&;]*", message = "Invalid movie name")
     private String name;
+
+    @Override
+    public String toString() {
+        return "MovieDto{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

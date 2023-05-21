@@ -13,7 +13,7 @@
     <title>Edit session</title>
 </head>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
-<div class="container">
+<div class="container col-3">
     <div class="card card-login mx-auto text-center bg-dark">
         <div class="card-header mx-auto bg-dark">
             <span> <img src="https://amar.vote/assets/img/amarVotebd.png" class="w-75" alt="Logo"> </span><br/>
@@ -23,7 +23,7 @@
         </div>
         <div class="card-body">
 
-            <form name="f" th:method="patch" th:action="@{/schedule-admin/edit/{id}(id=${sessionAdminDto.id})}" th:object="${sessionAdminDto}">
+            <form name="f" th:method="patch" th:action="@{/admin/schedule-admin/edit/{id}(id=${sessionAdminDto.id})}" th:object="${sessionAdminDto}">
 
                 <div class="input-group form-group">
                     <div class="input-group-prepend">3
@@ -76,6 +76,7 @@
 
                 <div class="form-group">
                     <input type="hidden" th:field="*{hallId}" th:value="${sessionAdminDto.hallId}">
+                    <input type="hidden" th:field="*{status}" th:value="${sessionAdminDto.status}">
                     <input type="submit" name="btn" value="Register"
                            class="btn btn-outline-danger float-right login_btn">
                 </div>

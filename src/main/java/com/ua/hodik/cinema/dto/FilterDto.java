@@ -7,15 +7,16 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.util.List;
 import java.util.Objects;
 
-public class FilterDto {
+public class FilterDto<T> {
     private String column;
-    private List<String> values;
+    private List<T> values;
     private Operation operations;
-
-    public FilterDto(String column, List<String> values, Operation operations) {
+//    private final Class<T> clazz;
+    public FilterDto(String column, List<T> values, Operation operations) {
         this.column = column;
         this.values = values;
         this.operations = operations;
+//        this.clazz = clazz;
     }
 
     public String getColumn() {
@@ -26,11 +27,11 @@ public class FilterDto {
         this.column = column;
     }
 
-    public List<String> getValues() {
+    public List<T> getValues() {
         return values;
     }
 
-    public void setValues(List<String> values) {
+    public void setValues(List<T> values) {
         this.values = values;
     }
 
@@ -41,6 +42,10 @@ public class FilterDto {
     public void setOperations(Operation operations) {
         this.operations = operations;
     }
+
+//    public Class<T> getClazz() {
+//        return clazz;
+//    }
 
     @Override
     public boolean equals(Object o) {

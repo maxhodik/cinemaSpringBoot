@@ -20,7 +20,7 @@ public class FilterFormDto {
     private List<LocalTime> time;
     private List<String> day;
     private List<String> movie;
-    private List<Status> status;
+    private List<String> status;
     private boolean availableSeats;
 
 }

@@ -21,17 +21,21 @@ public class UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
+
     @Transactional
-    public void registration (User user){
+    public void registration(User user) {
         String password = user.getPassword();
-        if(password.equals("Admin")){
-            user.setRole(Role.ADMIN);
-        }else user.setRole(Role.USER);
+        if (password.equals("Admin")) {
+            user.setRole(Role.ROLE_ADMIN);
+        } else {
+            user.setRole(Role.ROLE_USER);
+        }
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
+
     }
 
     public Optional<User> findByName(String name) {
-      return userRepository.findByName(name);
+        return userRepository.findByName(name);
     }
 }

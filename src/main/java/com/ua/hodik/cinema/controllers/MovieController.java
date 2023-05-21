@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/movie")
+@RequestMapping("/admin/movie")
 public class MovieController {
     private final MovieService movieService;
     private final Validator movieValidator;
@@ -59,13 +59,13 @@ public class MovieController {
             return "admin/add-movie";
         }
         movieService.save(movieDto);
-        return "redirect:/movie";
+        return "redirect:/admin/movie";
     }
 
     @DeleteMapping("/{id}")
     public String deleteMovie(@PathVariable("id") int id) {
         movieService.deleteMovie(id);
-        return "redirect:/movie";
+        return "redirect:/admin/movie";
     }
 
     @GetMapping("/{id}")
@@ -85,7 +85,7 @@ public class MovieController {
             return "admin/edit-movie";
         }
         movieService.save(movieDto);
-        return "redirect:/movie";
+        return "redirect:/admin/movie";
     }
 
 
