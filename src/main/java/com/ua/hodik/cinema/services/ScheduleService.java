@@ -88,6 +88,7 @@ public class ScheduleService {
 
     private SessionAdminDto convertToSessionAdminDto(Session session) {
         SessionAdminDto sessionAdminDto = modelMapper.map(session, SessionAdminDto.class);
+        sessionAdminDto.setDayOfWeek(session.getDate().getDayOfWeek());
         Hall hall = session.getHall();
         sessionAdminDto.setCapacity(hall.getCapacity());
         sessionAdminDto.setNumberOfAvailableSeats(hall.getNumberAvailableSeats());

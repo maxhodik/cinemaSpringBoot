@@ -308,6 +308,7 @@
                 <!--        <th> <fmt:message key="label.movie"/></th>-->
                 <th>Date</th>
                 <th>Time</th>
+                <th>Day of Week</th>
                 <th>Movie name</th>
                 <th>Available seats</th>
                 <th>Solded seats</th>
@@ -327,6 +328,7 @@
             <tr>
                 <td th:text="${sessionAdminDto.date}"></td>
                 <td th:text="${sessionAdminDto.time}"></td>
+                <td th:text="${sessionAdminDto.dayOfWeek}"></td>
                 <td th:text="${sessionAdminDto.movieName}"></td>
                 <td th:text="${sessionAdminDto.numberOfAvailableSeats}"></td>
                 <td th:text="${sessionAdminDto.numberOfSoldSeats}"></td>

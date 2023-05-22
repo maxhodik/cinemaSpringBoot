@@ -1,10 +1,6 @@
 package com.ua.hodik.cinema.dto;
 
-import com.ua.hodik.cinema.model.Hall;
-import com.ua.hodik.cinema.model.Movie;
-import com.ua.hodik.cinema.model.Receipt;
 import com.ua.hodik.cinema.model.Status;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +10,6 @@ import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 @Data
 @Builder
