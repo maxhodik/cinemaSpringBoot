@@ -9,7 +9,9 @@ import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.security.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,10 +57,10 @@ public class SessionSpecification {
                 Expression<Integer> dayOfWeekExp = criteriaBuilder.function("DAYOFWEEK", Integer.class, root.get("date"));
 
 
-                CriteriaBuilder.In<Integer> dayCriteria= criteriaBuilder.in(dayOfWeekExp);
-          for (Object day: values){
-              dayCriteria.value( Integer.valueOf(day.toString()));
-          }
+                CriteriaBuilder.In<Integer> dayCriteria = criteriaBuilder.in(dayOfWeekExp);
+                for (Object day : values) {
+                    dayCriteria.value(Integer.valueOf(day.toString()));
+                }
                 predicates.add(dayCriteria);
 
             }
@@ -82,6 +84,27 @@ public class SessionSpecification {
                     movie1.value(movie.toString());
                 }
                 predicates.add(movie1);
+            }
+            //filter for DataTime.now
+            FilterDto<?> filterDateTime = filters.get("dateTime");
+            if (filterDateTime != null) {
+                List<?> values = filterDateTime.getValues();
+
+                Expression<String> dateExp = criteriaBuilder.function("DATE", String.class, root.get("date"));
+                Expression<String> timeExp = criteriaBuilder.function("TIME", String.class, root.get("time"));
+            Expression<String> stringExpression = criteriaBuilder.concat(dateExp, timeExp);
+            String dateTimeExp= values.get(0).toString().replace("T", " ");
+                System.out.println(dateTimeExp);
+                Predicate dateTimePredicate = criteriaBuilder.greaterThan(stringExpression,
+                         dateTimeExp);
+                predicates.add(dateTimePredicate);
+
+            }
+            FilterDto<?> filterAvailableSeats = filters.get("availableSeats");
+            if (filterAvailableSeats != null) {
+                Predicate availableSeatsPredicate = criteriaBuilder.greaterThan(hallsRoot.get("numberAvailableSeats"),
+                        0);
+                predicates.add(availableSeatsPredicate);
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

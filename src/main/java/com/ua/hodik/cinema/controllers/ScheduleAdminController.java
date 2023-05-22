@@ -92,7 +92,7 @@ public class ScheduleAdminController {
         return "admin/schedule-admin";
     }
     @PostMapping("/reset")
-    public String reset (@ModelAttribute("filterFormDto") FilterFormDto filterFormDto, Model model,
+    public String resetFilters (@ModelAttribute("filterFormDto") FilterFormDto filterFormDto, Model model,
                                @RequestParam(value = "sort", defaultValue = "id,DESC") String sort,
                                @RequestParam(value = "page", defaultValue = "0") int page,
                                @RequestParam(value = "size", defaultValue = "5") int size) {
@@ -117,41 +117,6 @@ public class ScheduleAdminController {
         return "admin/schedule-admin";
     }
 
-//    @GetMapping()
-//    public String schedule(Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size = 5) Pageable pageable,
-//                           @ModelAttribute("filterFormDto") FilterFormDto filterFormDto) {
-//        Page<SessionAdminDto> page;
-//        page = scheduleService.findAllWithFilters(pageable, filterFormDto);
-//        model.addAttribute("filterFormDto", filterFormDto);
-//        System.out.println(page.getSort());
-//        model.addAttribute("page", page);
-//        model.addAttribute("movieDto", movieService.findAll(null));
-//        Sort sort1 = page.getSort();
-//        String sort = sort1.stream()
-//                .map(Sort.Order::getProperty)
-//                .collect(Collectors.joining(","));
-//        model.addAttribute("sort", sort);
-//
-//        return "admin/schedule-admin";
-//    }
-//
-//    @PostMapping()
-//    public String searchSchedule(@ModelAttribute("filterFormDto") @Valid FilterFormDto filters,
-//                                 @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 5) Pageable pageable, Model model) {
-//
-//        // validate searchCriteria
-//        // scheduleService.search(scheduleService)
-//        Page<SessionAdminDto> page = scheduleService.findAllWithFilters(pageable, filters);
-//        model.addAttribute("page", page);
-//        model.addAttribute("movieDto", movieService.findAll(null));
-//        model.addAttribute("filterFormDto", filters);
-//        Sort sort1 = page.getSort();
-//        String sort = sort1.stream()
-//                .map(Sort.Order::getProperty)
-//                .collect(Collectors.joining(","));
-//        model.addAttribute("sort", sort);
-//        return "/admin/schedule-admin";
-//    }
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") int id, Model model) {

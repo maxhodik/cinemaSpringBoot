@@ -11,11 +11,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -33,12 +32,16 @@ public class ScheduleController {
     }
 
     @GetMapping()
-    public String schedule(Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC,  size = 5) Pageable pageable) {
-        Page<SessionAdminDto> page = scheduleService.findAll(pageable);
-        model.addAttribute("page", page);
+    public String schedule(Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 5) Pageable pageable,
+                           @ModelAttribute("filterFormDto") FilterFormDto filterFormDto) {
+        filterFormDto.setDateTime(LocalDateTime.now());
+//        filterFormDto.setStatus(List.of("ACTIVE"));
+        filterFormDto.setAvailableSeats(true);
+        Page<SessionAdminDto> sessionPage = scheduleService.findAllWithFilters(filterFormDto, pageable);
+        model.addAttribute("page", sessionPage);
         model.addAttribute("movieDto", movieService.findAll(null));
         model.addAttribute("filterFormDto", new FilterFormDto());
-        String sort = page.getSort().stream()
+        String sort = sessionPage.getSort().stream()
                 .map(order -> order.getProperty())
                 .collect(Collectors.joining(","));
         model.addAttribute("sort", sort);
@@ -46,23 +49,38 @@ public class ScheduleController {
     }
 
     @PostMapping()
-    public String searchSchedule (@ModelAttribute("filterFormDto") FilterFormDto filters,
-                                  @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 5) Pageable pageable, Model model) {
-        System.out.println(filters);
+    public String searchSchedule(@ModelAttribute("filterFormDto") FilterFormDto filterFormDto,
+                                 @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 5) Pageable pageable, Model model) {
         // validate searchCriteria
         // scheduleService.search(scheduleService)
-        FilterFormDto filterFormDto= (FilterFormDto) model.getAttribute("filterFormDto");
-//        Page<SessionAdminDto> page = scheduleService.findAllWithFilters(pageable,filterFormDto);
-//        model.addAttribute("page", page);
-//        model.addAttribute("movieDto", movieService.findAll(null));
-//        model.addAttribute("filterFormDto", new FilterFormDto());
-//        String sort = page.getSort().stream()
-//                .map(order -> order.getProperty())
-//                .collect(Collectors.joining(","));
-//        model.addAttribute("sort", sort);
+        filterFormDto.setDateTime(LocalDateTime.now());
+//        filterFormDto.setStatus(List.of("ACTIVE"));
+        filterFormDto.setAvailableSeats(true);
+        Page<SessionAdminDto> sessionPage = scheduleService.findAllWithFilters(filterFormDto, pageable);
+        String sort = sessionPage.getSort().stream()
+                .map(order -> order.getProperty())
+                .collect(Collectors.joining(","));
+        model.addAttribute("filterFormDto", filterFormDto);
+        model.addAttribute("page", sessionPage);
+        model.addAttribute("movieDto", movieService.findAll(null));
+        model.addAttribute("sort", sort);
         return "schedule";
     }
 
-
-
+    @PostMapping("/reset")
+    public String resetFilers(@ModelAttribute("filterFormDto") FilterFormDto filterFormDto,
+                              @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 5) Pageable pageable, Model model) {
+        // validate searchCriteria
+        // scheduleService.search(scheduleService)
+        filterFormDto = new FilterFormDto();
+        Page<SessionAdminDto> sessionPage = scheduleService.findAllWithFilters(filterFormDto, pageable);
+        String sort = sessionPage.getSort().stream()
+                .map(order -> order.getProperty())
+                .collect(Collectors.joining(","));
+        model.addAttribute("filterFormDto", filterFormDto);
+        model.addAttribute("page", sessionPage);
+        model.addAttribute("movieDto", movieService.findAll(null));
+        model.addAttribute("sort", sort);
+        return "schedule";
+    }
 }

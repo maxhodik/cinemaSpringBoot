@@ -37,15 +37,17 @@ public class ConvertToFilterDto {
         if (filterFormDto.isAvailableSeats()) {
             filters.put("availableSeats", new FilterDto<>("availableSeats", List.of(filterFormDto.isAvailableSeats()), Operation.IS));
         }
-
-
+        if (filterFormDto.getDateTime() != null) {
+            filters.put("dateTime", new FilterDto<>("dateTime", List.of(filterFormDto.getDateTime()), Operation.AFTER));
+        }
         return filters;
-
     }
 
     private boolean isAnyNullInList(List<?> values) {
         return values.stream().anyMatch(Objects::isNull);
     }
+
+
 //    public Map<FilterDto> convert (FilterFormDto filterFormDto) {
 //        List<FilterDto> filters = new ArrayList<>();
 //

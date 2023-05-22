@@ -1,13 +1,12 @@
 package com.ua.hodik.cinema.dto;
 
-import com.ua.hodik.cinema.model.Status;
-import com.ua.hodik.cinema.model.WeekDays;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -16,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FilterFormDto {
+    private LocalDateTime dateTime;
     private List<LocalDate> date;
     private List<LocalTime> time;
     private List<String> day;

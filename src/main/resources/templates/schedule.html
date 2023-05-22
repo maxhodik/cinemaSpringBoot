@@ -8,7 +8,7 @@
 <head>
     <title>Schedule</title>
     <meta charset="UTF-8">
-    <title>Movies</title>
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="/index">Index
@@ -48,13 +48,15 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="nav-item" action="schedule">
+                <form class="nav-item" action="/schedule">
                     <label for="size">Records
                         <!--                        <fmt:message key="number.records"/>-->
                     </label>
                     <input class="col-2" type="number" min="1" name="size" id="size"
                            value="${page.size}">
                     <input type="hidden" name="sort" th:value="${sort}">
+
+                    <!--                    <input type="hidden" name="filterFormDto" th:value="${filterFormDto}}">-->
                     <!--                           value="${not empty page.size ? page.size : '5'}">-->
                     <!--                                        <input type="hidden" name="offset" value="0">-->
                     <button type="submit" class="btn btn-dark mt-2 mb-3">Submit
@@ -68,6 +70,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
+
 <div>
     <!--    filters-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -76,6 +79,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
                         <a>
+                            <!-- Filter section -->
                             <form method="post" th:action="@{/schedule}" th:object="${filterFormDto}">
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -108,25 +112,25 @@
                                             </a>
                                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                                                <li><input type="checkbox" th:field="*{day}" id=6 value="6">SUNDAY
+                                                <li><input type="checkbox" th:field="*{day}" id=1 value="1">SUNDAY
                                                     <!--                                                    <fmt:message key="SUNDAY"/>-->
                                                 </li>
-                                                <li><input type="checkbox" th:field="*{day}" id=0 value="0">MONDAY
+                                                <li><input type="checkbox" th:field="*{day}" id=2 value="2">MONDAY
                                                     <!--                                                    <fmt:message key="MONDAY"/>-->
                                                 </li>
-                                                <li><input type="checkbox" th:field="*{day}" id=1 value="1">TUESDAY
+                                                <li><input type="checkbox" th:field="*{day}" id=3 value="3">TUESDAY
                                                     <!--                                                    <fmt:message key="TUESDAY"/>-->
                                                 </li>
-                                                <li><input type="checkbox" th:field="*{day}" id=2 value="2">WEDNESDAY
+                                                <li><input type="checkbox" th:field="*{day}" id=4 value="4">WEDNESDAY
                                                     <!--                                                    <fmt:message key="WEDNESDAY"/>-->
                                                 </li>
-                                                <li><input type="checkbox" th:field="*{day}" id=3 value="3">THURSDAY
+                                                <li><input type="checkbox" th:field="*{day}" id=5 value="5">THURSDAY
                                                     <!--                                                    <fmt:message key="THURSDAY"/>-->
                                                 </li>
-                                                <li><input type="checkbox" th:field="*{day}" id=4 value="4">FRIDAY
+                                                <li><input type="checkbox" th:field="*{day}" id=6 value="6">FRIDAY
                                                     <!--                                                    <fmt:message key="FRIDAY"/>-->
                                                 </li>
-                                                <li><input type="checkbox" th:field="*{day}" id=5 value="5">SATURDAY
+                                                <li><input type="checkbox" th:field="*{day}" id=7 value="7">SATURDAY
                                                     <!--                                                    <fmt:message key="SATURDAY"/>-->
                                                 </li>
                                             </ul>
@@ -157,7 +161,8 @@
                                             </a>
                                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                                 <div th:each="movie:${movieDto}">
-                                                    <li><input type="checkbox" th:field="*{movie}" th:value="${movie}">
+                                                    <li><input type="checkbox" th:field="*{movie}"
+                                                               th:value="${movie.name}">
                                                         <td th:text="${movie.getName()}"></td>
                                                     </li>
                                                 </div>
@@ -171,19 +176,32 @@
                                             </a>
                                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                                                <input type="checkbox" th:field="*{status}" value="ACTIVE"/>status
+                                                <input type="checkbox" th:field="*{status}" value="ACTIVE"/>ACTIVE
                                                 <!--                                                <fmt:message key="label.status"/>-->
                                             </ul>
                                         </li>
                                         <li class="nav-item">
+                                            <input type="hidden" name="sort" th:value="${sort}">
+                                            <input type="hidden" name="page" th:value="${page.number}">
+                                            <input type="hidden" name="size" th:value="${page.size}">
                                             <input class="btn btn-secondary" type="submit" value="submit"/>
                                         </li>
                                     </ul>
                                 </div>
                             </form>
+
                     <li>
-                        <form method="post" th:action="@{/schedule}">
-                            <input hidden type="text" name="reset" value="true"/>
+                        <form method="post" th:action="@{/schedule/reset}" th:object="${filterFormDto}">
+                            <input type="hidden" name="sort" th:value="${sort}">
+                            <input type="hidden" name="page" th:value="${page.number}">
+                            <input type="hidden" name="size" th:value="${page.size}">
+                            <input type="hidden" th:field="*{movie}"/>
+                            <input type="hidden" th:field="*{date}"/>
+                            <input type="hidden" th:field="*{time}"/>
+                            <input type="hidden" th:field="*{day}"/>
+                            <input type="hidden" th:field="*{status}"/>
+                            <input type="hidden" th:field="*{availableSeats}"/>
+                            <!--                            <input type="hidden" name="filterFormDto" th:value="${filterFormDto}"/>-->
                             <input class="btn btn-secondary" type="submit" value="reset"/>
                         </form>
                         </a>
@@ -196,41 +214,83 @@
 
 
 <!--                   End dilters                     -->
-<form action="schedule">
+<!--<form action="schedule">-->
+
+<form  method="post" th:action="@{/schedule}" th:object="${filterFormDto}">
+
+
     <li class="nav-item">
         <a class="btn btn-outline-secondary dropdown-toggle" id="Dropdown"
            role="button"
            data-bs-toggle="dropdown"> Sort
             <!--            <th:message key="label.sort" />-->
         </a>
+
+
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <thead>
             <li>
                 <span>
-                    <a th:href="@{/schedule(page=${page.number},size=${page.size}, sort=id)}">Id</a>
+    <form th:action="@{/schedule(page=${page.number},size=${page.size},sort=id)}" method="post" >
+    <input type="hidden" name="page" th:value="${page.number}">
+    <input type="hidden" name="size" th:value="${page.size}">
+    <input type="hidden" th:field="*{movie}"/>
+    <input type="hidden" th:field="*{date}"/>
+    <input type="hidden" th:field="*{time}"/>
+    <input type="hidden" th:field="*{day}"/>
+    <input type="hidden" th:field="*{status}"/>
+    <input type="hidden" th:field="*{availableSeats}"/>
+    <button type="submit">Id</button>
+    </form>
                 </span>
             </li>
             <li>
                 <span>
-                    <a th:href="@{/schedule(page=${page.number},size=${page.size}, sort=movieName)}">Movie name</a>
+                    <form th:action="@{/schedule(page=${page.number},size=${page.size}, sort=movieName)}" method="post">
+               <input type="hidden" name="page" th:value="${page.number}">
+    <input type="hidden" name="size" th:value="${page.size}">
+    <input type="hidden" th:field="*{movie}"/>
+    <input type="hidden" th:field="*{date}"/>
+    <input type="hidden" th:field="*{time}"/>
+    <input type="hidden" th:field="*{day}"/>
+    <input type="hidden" th:field="*{status}"/>
+    <input type="hidden" th:field="*{availableSeats}"/>
+                        <button type="submit">Movie name</button></form>
                 </span>
             </li>
             <li>
                 <span>
-                    <a th:href="@{/schedule(page=${page.number},size=${page.size}, sort=date)}">Date</a>
+                    <form th:action="@{/schedule(page=${page.number},size=${page.size}, sort=date)}" method="post">
+                  <input type="hidden" name="page" th:value="${page.number}">
+    <input type="hidden" name="size" th:value="${page.size}">
+    <input type="hidden" th:field="*{movie}"/>
+    <input type="hidden" th:field="*{date}"/>
+    <input type="hidden" th:field="*{time}"/>
+    <input type="hidden" th:field="*{day}"/>
+    <input type="hidden" th:field="*{status}"/>
+    <input type="hidden" th:field="*{availableSeats}"/>
+                        <button type="submit">Date</button></form>
                 </span>
             </li>
             </li>
             <li>
                 <span>
-                    <a th:href="@{/schedule(page=${page.number},size=${page.size}, sort=time)}">Time</a>
+              <form th:action="@{/schedule(page=${page.number},size=${page.size}, sort=time)}"method="post">
+                        <input type="hidden" name="page" th:value="${page.number}">
+    <input type="hidden" name="size" th:value="${page.size}">
+    <input type="hidden" th:field="*{movie}"/>
+    <input type="hidden" th:field="*{date}"/>
+    <input type="hidden" th:field="*{time}"/>
+    <input type="hidden" th:field="*{day}"/>
+    <input type="hidden" th:field="*{status}"/>
+    <input type="hidden" th:field="*{availableSeats}"/>
+                     <button type="submit">Time</button></form>
                 </span>
             </li>
 
             </thead>
         </ul>
     </li>
-
 </form>
 <div class="container col-11">
     <table class="table table-striped table-responsive-md btn-table table-bordered table-hover">
@@ -276,17 +336,55 @@
     </table>
     <div class="pagination-div">
     <span th:if="${page.hasPrevious()}">
-        <a th:href="@{/schedule(page=${page.number - 1}, size=${page.size},sort=${sort})}">Previous</a>
+        <form th:object="${filterFormDto}"
+              th:action="@{/schedule(page=${page.number - 1},size=${page.size},sort=${sort})}"
+              method="post">
+                                <input type="hidden" th:field="*{movie}"/>
+                    <input type="hidden" th:field="*{date}"/>
+                    <input type="hidden" th:field="*{time}"/>
+                    <input type="hidden" th:field="*{day}"/>
+                    <input type="hidden" th:field="*{status}"/>
+                    <input type="hidden" th:field="*{availableSeats}"/>
+    <button type="submit">Previous</button>
+        </form>
     </span>
         <th:block th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}">
             <span class="selected" th:if="${page.number == i}">[[${i}+1]]</span>
             <span th:unless="${page.number == i}">
-             <a th:href="@{/schedule(page=${i}, size=${page.size},sort=${sort})}">[[${i}+1]]</a>
+
+                    <form th:object="${filterFormDto}"
+                          th:action="@{/schedule(page=${i},size=${page.size},sort=${sort})}"
+                          method="post">
+                                             <input type="hidden" th:field="*{movie}"/>
+                                             <input type="hidden" th:field="*{date}"/>
+                                             <input type="hidden" th:field="*{time}"/>
+                                             <input type="hidden" th:field="*{day}"/>
+                                             <input type="hidden" th:field="*{status}"/>
+                                             <input type="hidden" th:field="*{availableSeats}"/>
+                             <button type="submit">[[${i}+1]]</button>
+                        <!--            <a th:href="@{/schedule(page=${i},size=${page.size},sort=${sort},filterFormDto=${filterFormDto})}">[[${i}+1]]</a>-->
+
+                    </form>
         </span>
+
         </th:block>
+        <!--            <span th:if="${page.hasNext()}">-->
+        <!--        <a th:href="@{/schedule(page=${page.number + 1},size=${page.size},sort=${sort})}"  th:object="${filterFormDto}">Next</a>-->
+
+        <!--    </span>-->
         <span th:if="${page.hasNext()}">
-        <a th:href="@{/schedule(page=${page.number + 1}, size=${page.size},sort=${sort})}">Next</a>
-    </span>
+                <form th:object="${filterFormDto}"
+                      th:action="@{/schedule(page=${page.number + 1},size=${page.size},sort=${sort})}"
+                      method="post">
+                    <input type="hidden" th:field="*{movie}"/>
+                    <input type="hidden" th:field="*{date}"/>
+                    <input type="hidden" th:field="*{time}"/>
+                    <input type="hidden" th:field="*{day}"/>
+                    <input type="hidden" th:field="*{status}"/>
+                    <input type="hidden" th:field="*{availableSeats}"/>
+    <button type="submit">Next</button>
+</form>
+            </span>
     </div>
 </div>
 </body>
