@@ -115,25 +115,25 @@
                                             </a>
                                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                                                <li><input type="checkbox" th:field="*{day}" id=6 value="6">SUNDAY
+                                                <li><input type="checkbox" th:field="*{day}" id=1 value="1">SUNDAY
                                                     <!--                                                    <fmt:message key="SUNDAY"/>-->
                                                 </li>
-                                                <li><input type="checkbox" th:field="*{day}" id=0 value="0">MONDAY
+                                                <li><input type="checkbox" th:field="*{day}" id=2 value="2">MONDAY
                                                     <!--                                                    <fmt:message key="MONDAY"/>-->
                                                 </li>
-                                                <li><input type="checkbox" th:field="*{day}" id=1 value="1">TUESDAY
+                                                <li><input type="checkbox" th:field="*{day}" id=3 value="3">TUESDAY
                                                     <!--                                                    <fmt:message key="TUESDAY"/>-->
                                                 </li>
-                                                <li><input type="checkbox" th:field="*{day}" id=2 value="2">WEDNESDAY
+                                                <li><input type="checkbox" th:field="*{day}" id=4 value="4">WEDNESDAY
                                                     <!--                                                    <fmt:message key="WEDNESDAY"/>-->
                                                 </li>
-                                                <li><input type="checkbox" th:field="*{day}" id=3 value="3">THURSDAY
+                                                <li><input type="checkbox" th:field="*{day}" id=5 value="5">THURSDAY
                                                     <!--                                                    <fmt:message key="THURSDAY"/>-->
                                                 </li>
-                                                <li><input type="checkbox" th:field="*{day}" id=4 value="4">FRIDAY
+                                                <li><input type="checkbox" th:field="*{day}" id=6 value="6">FRIDAY
                                                     <!--                                                    <fmt:message key="FRIDAY"/>-->
                                                 </li>
-                                                <li><input type="checkbox" th:field="*{day}" id=5 value="5">SATURDAY
+                                                <li><input type="checkbox" th:field="*{day}" id=7 value="7">SATURDAY
                                                     <!--                                                    <fmt:message key="SATURDAY"/>-->
                                                 </li>
                                             </ul>
@@ -179,11 +179,12 @@
                                             </a>
                                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                                                <input type="checkbox" th:field="*{status}" value="ACTIVE"/>status
+                                                <input type="checkbox" th:field="*{status}" value="ACTIVE"/>ACTIVE
                                                 <!--                                                <fmt:message key="label.status"/>-->
                                             </ul>
                                         </li>
                                         <li class="nav-item">
+                                            <input type="hidden" name="sort" th:value="${sort}">
                                             <input type="hidden" name="page" th:value="${page.number}">
                                             <input type="hidden" name="size" th:value="${page.size}">
                                             <input class="btn btn-secondary" type="submit" value="submit"/>
@@ -193,8 +194,17 @@
                             </form>
 
                     <li>
-                        <form method="post" th:action="@{/schedule}">
-                            <input hidden type="text" name="reset" value="true"/>
+                        <form method="post" th:action="@{/admin/schedule-admin/reset}" th:object="${filterFormDto}">
+                            <input type="hidden" name="sort" th:value="${sort}">
+                            <input type="hidden" name="page" th:value="${page.number}">
+                            <input type="hidden" name="size" th:value="${page.size}">
+                            <input type="hidden" th:field="*{movie}"/>
+                            <input type="hidden" th:field="*{date}"/>
+                            <input type="hidden" th:field="*{time}"/>
+                            <input type="hidden" th:field="*{day}"/>
+                            <input type="hidden" th:field="*{status}"/>
+                            <input type="hidden" th:field="*{availableSeats}"/>
+<!--                            <input type="hidden" name="filterFormDto" th:value="${filterFormDto}"/>-->
                             <input class="btn btn-secondary" type="submit" value="reset"/>
                         </form>
                         </a>

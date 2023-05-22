@@ -31,7 +31,7 @@ public class ConvertToFilterDto {
 
             filters.put("movie", new FilterDto<>("movie", filterFormDto.getMovie(), Operation.IN));
         }
-        if (filterFormDto.getStatus() != null && !isAnyNullInList(filterFormDto.getStatus())) {
+        if (CollectionUtils.isNotEmpty(filterFormDto.getStatus()) && !isAnyNullInList(filterFormDto.getStatus())) {
             filters.put("status", new FilterDto<>("status", filterFormDto.getStatus(), Operation.IN));
         }
         if (filterFormDto.isAvailableSeats()) {

@@ -91,6 +91,31 @@ public class ScheduleAdminController {
 
         return "admin/schedule-admin";
     }
+    @PostMapping("/reset")
+    public String reset (@ModelAttribute("filterFormDto") FilterFormDto filterFormDto, Model model,
+                               @RequestParam(value = "sort", defaultValue = "id,DESC") String sort,
+                               @RequestParam(value = "page", defaultValue = "0") int page,
+                               @RequestParam(value = "size", defaultValue = "5") int size) {
+        filterFormDto=new FilterFormDto();
+        String[] sortProperties = sort.split(",");
+        String sortBy;
+        Sort.Direction sortDirection = Sort.Direction.DESC;
+        if (sortProperties.length >= 2) {
+            sortBy = sortProperties[0];
+            sortDirection = Sort.Direction.fromString(sortProperties[1]);
+        } else {
+            sortBy = sortProperties[0];
+        }
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sortBy));
+
+        Page<SessionAdminDto> sessionPage = scheduleService.findAllWithFilters(filterFormDto, pageable);
+
+        model.addAttribute("filterFormDto", filterFormDto);
+        model.addAttribute("page", sessionPage);
+        model.addAttribute("movieDto", movieService.findAll(null));
+        model.addAttribute("sort", sort);
+        return "admin/schedule-admin";
+    }
 
 //    @GetMapping()
 //    public String schedule(Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size = 5) Pageable pageable,

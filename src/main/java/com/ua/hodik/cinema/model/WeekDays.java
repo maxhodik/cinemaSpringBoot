@@ -1,13 +1,13 @@
 package com.ua.hodik.cinema.model;
 
 public enum WeekDays {
-    SUNDAY("sunday", "НЕДІЛЯ", 6),
-    MONDAY("monday", "ПОНЕДІЛОК", 0),
-    TUESDAY("tuesday", "ВІВТОРОК", 1),
-    WEDNESDAY("wednesday", "СЕРЕДА", 2),
-    THURSDAY("thursday", "ЧЕТВЕР", 3),
-    FRIDAY("friday", "П'ЯТНИЦЯ", 4),
-    SATURDAY("saturday", "СУБОТА", 5);
+    SUNDAY("sunday", "НЕДІЛЯ", 1),
+    MONDAY("monday", "ПОНЕДІЛОК", 2),
+    TUESDAY("tuesday", "ВІВТОРОК", 3),
+    WEDNESDAY("wednesday", "СЕРЕДА", 4),
+    THURSDAY("thursday", "ЧЕТВЕР", 5),
+    FRIDAY("friday", "П'ЯТНИЦЯ", 6),
+    SATURDAY("saturday", "СУБОТА", 7);
 
 
     final String name;
@@ -27,6 +27,7 @@ public enum WeekDays {
     public int getNumber() {
         return number;
     }
+
 
     public static WeekDays getByNameIgnoringCase(String name) {
         for (WeekDays value : WeekDays.values()) {
