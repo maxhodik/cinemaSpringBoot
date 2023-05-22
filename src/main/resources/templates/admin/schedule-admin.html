@@ -55,6 +55,7 @@
                     <input class="col-2" type="number" min="1" name="size" id="size"
                            value="${page.size}">
                     <input type="hidden" name="sort" th:value="${sort}">
+
                     <!--                    <input type="hidden" name="filterFormDto" th:value="${filterFormDto}}">-->
                     <!--                           value="${not empty page.size ? page.size : '5'}">-->
                     <!--                                        <input type="hidden" name="offset" value="0">-->
@@ -81,6 +82,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
                         <a>
+                            <!-- Filter section -->
                             <form method="post" th:action="@{/admin/schedule-admin}" th:object="${filterFormDto}">
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -182,14 +184,14 @@
                                             </ul>
                                         </li>
                                         <li class="nav-item">
-                                            <input type="hidden" name="size"
-                                                   th:value="${page.size}">
-                                            <input type="hidden" name="sort" th:value="${sort}">
+                                            <input type="hidden" name="page" th:value="${page.number}">
+                                            <input type="hidden" name="size" th:value="${page.size}">
                                             <input class="btn btn-secondary" type="submit" value="submit"/>
                                         </li>
                                     </ul>
                                 </div>
                             </form>
+
                     <li>
                         <form method="post" th:action="@{/schedule}">
                             <input hidden type="text" name="reset" value="true"/>
@@ -205,7 +207,9 @@
 
 
 <!--                   End dilters                     -->
-<form action="schedule">
+<!--<form action="schedule">-->
+
+<form  method="post" th:action="@{/admin/schedule-admin}" th:object="${filterFormDto}">
 
 
     <li class="nav-item">
@@ -214,104 +218,181 @@
            data-bs-toggle="dropdown"> Sort
             <!--            <th:message key="label.sort" />-->
         </a>
+
+
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <thead>
             <li>
                 <span>
-
-                    <a th:href="@{/admin/schedule-admin(page=${page.number},size=${page.size}, sort=id)}">Id</a>
+    <form th:action="@{/admin/schedule-admin(page=${page.number},size=${page.size},sort=id)}" method="post" >
+    <input type="hidden" name="page" th:value="${page.number}">
+    <input type="hidden" name="size" th:value="${page.size}">
+    <input type="hidden" th:field="*{movie}"/>
+    <input type="hidden" th:field="*{date}"/>
+    <input type="hidden" th:field="*{time}"/>
+    <input type="hidden" th:field="*{day}"/>
+    <input type="hidden" th:field="*{status}"/>
+    <input type="hidden" th:field="*{availableSeats}"/>
+    <button type="submit">Id</button>
+    </form>
                 </span>
             </li>
             <li>
                 <span>
-                    <a th:href="@{/admin/schedule-admin(page=${page.number},size=${page.size}, sort=movieName)}">Movie name</a>
+                    <form th:action="@{/admin/schedule-admin(page=${page.number},size=${page.size}, sort=movieName)}" method="post">
+               <input type="hidden" name="page" th:value="${page.number}">
+    <input type="hidden" name="size" th:value="${page.size}">
+    <input type="hidden" th:field="*{movie}"/>
+    <input type="hidden" th:field="*{date}"/>
+    <input type="hidden" th:field="*{time}"/>
+    <input type="hidden" th:field="*{day}"/>
+    <input type="hidden" th:field="*{status}"/>
+    <input type="hidden" th:field="*{availableSeats}"/>
+                        <button type="submit">Movie name</button></form>
                 </span>
             </li>
             <li>
                 <span>
-                    <a th:href="@{/admin/schedule-admin(page=${page.number},size=${page.size}, sort=date)}">Date</a>
+                    <form th:action="@{/admin/schedule-admin(page=${page.number},size=${page.size}, sort=date)}" method="post">
+                  <input type="hidden" name="page" th:value="${page.number}">
+    <input type="hidden" name="size" th:value="${page.size}">
+    <input type="hidden" th:field="*{movie}"/>
+    <input type="hidden" th:field="*{date}"/>
+    <input type="hidden" th:field="*{time}"/>
+    <input type="hidden" th:field="*{day}"/>
+    <input type="hidden" th:field="*{status}"/>
+    <input type="hidden" th:field="*{availableSeats}"/>
+                        <button type="submit">Date</button></form>
                 </span>
             </li>
             </li>
             <li>
                 <span>
-                    <a th:href="@{/admin/schedule-admin(page=${page.number},size=${page.size}, sort=time)}">Time</a>
+              <form th:action="@{/admin/schedule-admin(page=${page.number},size=${page.size}, sort=time)}"method="post">
+                        <input type="hidden" name="page" th:value="${page.number}">
+    <input type="hidden" name="size" th:value="${page.size}">
+    <input type="hidden" th:field="*{movie}"/>
+    <input type="hidden" th:field="*{date}"/>
+    <input type="hidden" th:field="*{time}"/>
+    <input type="hidden" th:field="*{day}"/>
+    <input type="hidden" th:field="*{status}"/>
+    <input type="hidden" th:field="*{availableSeats}"/>
+                     <button type="submit">Time</button></form>
                 </span>
             </li>
 
             </thead>
         </ul>
     </li>
+</form>
 
 
-    <div class="container col-11">
-        <table class="table table-striped table-responsive-md btn-table table-bordered table-hover">
-            <thead class="thead-dark">
-            <form action="/admin/schedule-admin">
+<div class="container col-11">
+    <table class="table table-striped table-responsive-md btn-table table-bordered table-hover">
+        <thead class="thead-dark">
+        <form action="/admin/schedule-admin">
 
-                <tr>
-                    <!--        <th> <fmt:message key="label.date"/> </th>-->
-                    <!--        <th> <fmt:message key="label.time"/> </th>-->
-                    <!--        <th> <fmt:message key="label.movie"/></th>-->
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Movie name</th>
-                    <th>Available seats</th>
-                    <th>Solded seats</th>
-                    <th>Capacity</th>
-                    <th>Attendance</th>
+            <tr>
+                <!--        <th> <fmt:message key="label.date"/> </th>-->
+                <!--        <th> <fmt:message key="label.time"/> </th>-->
+                <!--        <th> <fmt:message key="label.movie"/></th>-->
+                <th>Date</th>
+                <th>Time</th>
+                <th>Movie name</th>
+                <th>Available seats</th>
+                <th>Solded seats</th>
+                <th>Capacity</th>
+                <th>Attendance</th>
 
-                    <th>Status</th>
+                <th>Status</th>
 
-                </tr>
-            </form>
-            </thead>
+            </tr>
+        </form>
+        </thead>
 
-            <tbody>
+        <tbody>
 
-            <div th:each="sessionAdminDto: ${page.content}">
+        <div th:each="sessionAdminDto: ${page.content}">
 
-                <tr>
-                    <td th:text="${sessionAdminDto.date}"></td>
-                    <td th:text="${sessionAdminDto.time}"></td>
-                    <td th:text="${sessionAdminDto.movieName}"></td>
-                    <td th:text="${sessionAdminDto.numberOfAvailableSeats}"></td>
-                    <td th:text="${sessionAdminDto.numberOfSoldSeats}"></td>
-                    <td th:text="${sessionAdminDto.capacity}"></td>
-                    <td th:text="${sessionAdminDto.attendance}"></td>
-                    <td th:text="${sessionAdminDto.status}"></td>
+            <tr>
+                <td th:text="${sessionAdminDto.date}"></td>
+                <td th:text="${sessionAdminDto.time}"></td>
+                <td th:text="${sessionAdminDto.movieName}"></td>
+                <td th:text="${sessionAdminDto.numberOfAvailableSeats}"></td>
+                <td th:text="${sessionAdminDto.numberOfSoldSeats}"></td>
+                <td th:text="${sessionAdminDto.capacity}"></td>
+                <td th:text="${sessionAdminDto.attendance}"></td>
+                <td th:text="${sessionAdminDto.status}"></td>
 
-                    <td>
-                        <a class="btn btn-outline-dark"
-                           th:href="@{/admin/schedule-admin/edit/{id}(id=${sessionAdminDto.id})}">edit
-                            <!--                <fmt:message key="purchase"/>-->
-                        </a>
-                    </td>
-                    <td>
-                        <form th:method="delete" th:action="@{/admin/schedule-admin/{id}(id=${sessionAdminDto.id})}">
-                            <input class="btn btn-outline-dark" type="submit" value="Cancel"/>
-                        </form>
-                    </td>
-                </tr>
+                <td>
+                    <a class="btn btn-outline-dark"
+                       th:href="@{/admin/schedule-admin/edit/{id}(id=${sessionAdminDto.id})}">edit
+                        <!--                <fmt:message key="purchase"/>-->
+                    </a>
+                </td>
+                <td>
+                    <form th:method="delete" th:action="@{/admin/schedule-admin/{id}(id=${sessionAdminDto.id})}">
+                        <input class="btn btn-outline-dark" type="submit" value="Cancel"/>
+                    </form>
+                </td>
+            </tr>
 
-            </div>
-            </tbody>
-
-        </table>
-        <div class="pagination-div">
-    <span th:if="${page.hasPrevious()}">
-        <a th:href="@{/admin/schedule-admin(page=${page.number - 1},size=${page.size},sort=${sort}, filterFormDto=${filterFormDto})}">Previous</a>
-    </span>
-            <th:block th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}">
-                <span class="selected" th:if="${page.number == i}">[[${i}+1]]</span>
-                <span th:unless="${page.number == i}">
-             <a th:href="@{/admin/schedule-admin(page=${i},size=${page.size},sort=${sort},filterFormDto=${filterFormDto})}">[[${i}+1]]</a>
-        </span>
-            </th:block>
-            <span th:if="${page.hasNext()}">
-        <a th:href="@{/admin/schedule-admin(page=${page.number + 1},size=${page.size},sort=${sort},filterFormDto=${filterFormDto})}">Next</a>
-    </span>
         </div>
+        </tbody>
+
+    </table>
+    <div class="pagination-div">
+    <span th:if="${page.hasPrevious()}">
+        <form th:object="${filterFormDto}"
+              th:action="@{/admin/schedule-admin(page=${page.number - 1},size=${page.size},sort=${sort})}"
+              method="post">
+                                <input type="hidden" th:field="*{movie}"/>
+                    <input type="hidden" th:field="*{date}"/>
+                    <input type="hidden" th:field="*{time}"/>
+                    <input type="hidden" th:field="*{day}"/>
+                    <input type="hidden" th:field="*{status}"/>
+                    <input type="hidden" th:field="*{availableSeats}"/>
+    <button type="submit">Previous</button>
+        </form>
+    </span>
+        <th:block th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}">
+            <span class="selected" th:if="${page.number == i}">[[${i}+1]]</span>
+            <span th:unless="${page.number == i}">
+
+                    <form th:object="${filterFormDto}"
+                          th:action="@{/admin/schedule-admin(page=${i},size=${page.size},sort=${sort})}"
+                          method="post">
+                                             <input type="hidden" th:field="*{movie}"/>
+                                             <input type="hidden" th:field="*{date}"/>
+                                             <input type="hidden" th:field="*{time}"/>
+                                             <input type="hidden" th:field="*{day}"/>
+                                             <input type="hidden" th:field="*{status}"/>
+                                             <input type="hidden" th:field="*{availableSeats}"/>
+                             <button type="submit">[[${i}+1]]</button>
+                        <!--            <a th:href="@{/admin/schedule-admin(page=${i},size=${page.size},sort=${sort},filterFormDto=${filterFormDto})}">[[${i}+1]]</a>-->
+
+                    </form>
+        </span>
+
+        </th:block>
+        <!--            <span th:if="${page.hasNext()}">-->
+        <!--        <a th:href="@{/admin/schedule-admin(page=${page.number + 1},size=${page.size},sort=${sort})}"  th:object="${filterFormDto}">Next</a>-->
+
+        <!--    </span>-->
+        <span th:if="${page.hasNext()}">
+                <form th:object="${filterFormDto}"
+                      th:action="@{/admin/schedule-admin(page=${page.number + 1},size=${page.size},sort=${sort})}"
+                      method="post">
+                    <input type="hidden" th:field="*{movie}"/>
+                    <input type="hidden" th:field="*{date}"/>
+                    <input type="hidden" th:field="*{time}"/>
+                    <input type="hidden" th:field="*{day}"/>
+                    <input type="hidden" th:field="*{status}"/>
+                    <input type="hidden" th:field="*{availableSeats}"/>
+    <button type="submit">Next</button>
+</form>
+            </span>
+    </div>
 
 </body>
 </html>
