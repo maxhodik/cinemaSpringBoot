@@ -1,9 +1,7 @@
 package com.ua.hodik.cinema.dto;
 
-import com.ua.hodik.cinema.model.Session;
-import com.ua.hodik.cinema.model.State;
-import com.ua.hodik.cinema.model.User;
-import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,10 +18,8 @@ public class ReceiptDto {
     private String userName;
 
     private int sessionId;
-    private String movieName;
-
-    private State state;
-
+    @Min(value = 1)
+    @Max(value = 5)
     private int numberOfSeats;
 
     private int price;

@@ -1,7 +1,10 @@
 package com.ua.hodik.cinema.dao;
 
 import com.ua.hodik.cinema.dto.FilterDto;
-import com.ua.hodik.cinema.model.*;
+import com.ua.hodik.cinema.model.Hall;
+import com.ua.hodik.cinema.model.Movie;
+import com.ua.hodik.cinema.model.Session;
+import com.ua.hodik.cinema.model.Status;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Join;
@@ -9,9 +12,7 @@ import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
-import java.security.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +28,6 @@ public class SessionSpecification {
             Join<Movie, Session> moviesRoot = root.join("movie");
             Join<Hall, Session> hallsRoot = root.join("hall");
 
-//            CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-//            CriteriaQuery<Session> criteriaQuery = criteriaBuilder.createQuery(Session.class);
-//            Root<Session> root = criteriaQuery.from(Session.class);
 
 
             FilterDto<?> filterDate = filters.get("date");
@@ -93,10 +91,11 @@ public class SessionSpecification {
                 Expression<String> dateExp = criteriaBuilder.function("DATE", String.class, root.get("date"));
                 Expression<String> timeExp = criteriaBuilder.function("TIME", String.class, root.get("time"));
             Expression<String> stringExpression = criteriaBuilder.concat(dateExp, timeExp);
-            String dateTimeExp= values.get(0).toString().replace("T", " ");
+            String dateTimeExp= values.get(0).toString().replace("T", "");
                 System.out.println(dateTimeExp);
                 Predicate dateTimePredicate = criteriaBuilder.greaterThan(stringExpression,
                          dateTimeExp);
+
                 predicates.add(dateTimePredicate);
 
             }

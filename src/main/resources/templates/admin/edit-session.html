@@ -23,13 +23,13 @@
         </div>
         <div class="card-body">
 
-            <form name="f" th:method="patch" th:action="@{/admin/schedule-admin/edit/{id}(id=${sessionAdminDto.id})}" th:object="${sessionAdminDto}">
+            <form name="f" th:method="patch" th:action="@{/admin/schedule-admin/edit-session}" th:object="${sessionAdminDto}">
 
                 <div class="input-group form-group">
                     <div class="input-group-prepend">3
-                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        <span class="input-group-text"><i class="fas fa-date"></i></span>
                     </div>
-                    <input type="date" th:field="*{date}" class="form-control" placeholder="Username">
+                    <input type="date" th:field="*{date}" class="form-control" placeholder="date">
                     <div style="color:red" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Errors</div>
                     <br>
                 </div>
@@ -45,11 +45,8 @@
                     <div class="input-group-prepend">3
                         <span class="input-group-text"><i class="fas fa-key"></i></span>
                     </div>
-                    <input type="number" th:field="*{capacity}" class="form-control" min=1
-                           placeholder="Username">
-                    <div style="color:red" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}">
-                        Errors
-                    </div>
+                    <input type="number" th:field="*{capacity}" class="form-control" min=1 placeholder="Capacity">
+                    <div style="color:red" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}">Errors</div>
                     <br>
                 </div>
                 <div class="input-group form-group">
@@ -64,8 +61,8 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <div th:each="movie:${movieDto}">
-                                <li><input type="radio" th:field="*{movieName}" th:value="${movie.name}">
-                                    <td th:text="${movie.getName()}"></td>
+                                <li><input type="radio" th:field="*{movieName}" th:value="${movie.name}" th:text="${movie.getName()}">
+
                                 </li>
                             </div>
                         </ul>
@@ -77,11 +74,12 @@
                 <div class="form-group">
                     <input type="hidden" th:field="*{hallId}" th:value="${sessionAdminDto.hallId}">
                     <input type="hidden" th:field="*{status}" th:value="${sessionAdminDto.status}">
+                    <input type="hidden" th:field="*{id}" th:value="${sessionAdminDto.id}">
+
                     <input type="submit" name="btn" value="Register"
                            class="btn btn-outline-danger float-right login_btn">
                 </div>
-                <div th:if="${param.error}" style="color: red ">Invalid name
-                </div>
+                <div th:if="${param.error}" style="color: red ">Invalid name</div>
 
             </form>
         </div>

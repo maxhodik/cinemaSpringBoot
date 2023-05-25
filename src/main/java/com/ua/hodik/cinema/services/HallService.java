@@ -41,6 +41,12 @@ public class HallService {
         return getHall(hall, numberAvailableSeats, capacity, numberOfSoldSeats);
 
     }
+    public Hall updateSoldSeats (Hall hall, int seats){
+        int capacity = hall.getCapacity();
+        int numberOfSoldSeats = hall.getNumberOfSoldSeats()+seats;
+        int numberAvailableSeats = capacity - numberOfSoldSeats;
+        return getHall(hall, numberAvailableSeats, capacity, numberOfSoldSeats);
+    }
 
     private Hall getHall(Hall hallToChange, int newAvailableSeats, int capacity, int numberOfSoldSeats) {
         BigDecimal attendance = new BigDecimal((float) numberOfSoldSeats / capacity * 100);

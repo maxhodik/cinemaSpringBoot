@@ -2,6 +2,10 @@ package com.ua.hodik.cinema.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +28,9 @@ public class Hall {
     @Column(name = "id")
     private int id;
     @Column(name = "number_seats")
+    @NotEmpty
+    @Min(value = 1)
+    @Max(value = 25)
     private int capacity;
     @Column(name = "number_available_seats")
     private int numberAvailableSeats;
@@ -32,7 +39,7 @@ public class Hall {
     @Column(name = "attendance")
     private BigDecimal attendance;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "hall")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hall")
     private List<Session> sessions;
 
     @Override

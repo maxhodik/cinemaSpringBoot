@@ -29,7 +29,5 @@ public class UserValidator implements Validator {
         if (user != null) {
             errors.rejectValue("name", "", "User with this name already exists");
         }
-
-
     }
 }

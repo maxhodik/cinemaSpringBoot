@@ -81,10 +81,18 @@
 
         </div>
         <div class="card-body">
+            <div th:if="${param.error}" style="color: red ">Invalid name
+            </div>
 
             <form name="f" th:method="post" th:action="@{/receipt/{id}(id=${sessionAdminDto.getId()})}"
                   th:object="${receiptDto}">
                 <div class="group form-group">-->
+                    <div class="group-prepend">
+                        <span class="group-text"><i class="fa-solid fa-calendar-days"></i></span>
+                    </div>
+                    <h3 class="panel-title" th:text="${session.userDto.name}"></h3>
+                    <br>
+
                     <div class="group-prepend">
                         <span class="group-text"><i class="fa-solid fa-calendar-days"></i></span>
                     </div>
@@ -111,9 +119,8 @@
                         <div class="input-group-prepend">3
                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
-                        <input type="number" th:field="*{numberOfSeats}" class="form-control" min=1 max="20">
-                        <div style="color:red" th:if="${#fields.hasErrors('numberOfSeats')}"
-                             th:errors="*{numberOfSeats}">
+                        <input type="number" th:field="*{numberOfSeats}" class="form-control" min=1 max="10">
+                        <div style="color:red" th:if="${#fields.hasErrors('numberOfSeats')}" th:errors="*{numberOfSeats}">
                             Errors
                         </div>
                         <br>
@@ -121,6 +128,8 @@
 
 
                     <div class="form-group">
+                        <input type="hidden" name="sessionId" th:value="${sessionAdminDto.getId()}">
+                        <input type="hidden" name="userName" th:value="${session.userDto.name}">
                         <input type="submit" name="btn" value="Register"
                                class="btn btn-outline-danger float-right login_btn">
                     </div>

@@ -149,6 +149,9 @@
                                                 <li><label>start</label>
                                                     <!--                                                    <fmt:message key="label.start"/>-->
                                                     <input type="time" th:field="*{time}"/>
+                                                    <div style="color:red" th:if="${#fields.hasErrors('time')}"
+                                                         th:errors="*{time}">Errors
+                                                    </div>
                                                 </li>
                                                 <li><label>end</label>
                                                     <!--                                                    <fmt:message key="label.end"/>-->
@@ -164,6 +167,9 @@
                                             </a>
                                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                                 <div th:each="movie:${movieDto}">
+                                                    <div style="color:red" th:if="${#fields.hasErrors('movie')}"
+                                                         th:errors="*{movie}">Errors
+                                                    </div>
                                                     <li><input type="checkbox" th:field="*{movie}"
                                                                th:value="${movie.name}">
                                                         <td th:text="${movie.getName()}"></td>
@@ -204,7 +210,7 @@
                             <input type="hidden" th:field="*{day}"/>
                             <input type="hidden" th:field="*{status}"/>
                             <input type="hidden" th:field="*{availableSeats}"/>
-<!--                            <input type="hidden" name="filterFormDto" th:value="${filterFormDto}"/>-->
+                            <!--                            <input type="hidden" name="filterFormDto" th:value="${filterFormDto}"/>-->
                             <input class="btn btn-secondary" type="submit" value="reset"/>
                         </form>
                         </a>
@@ -219,7 +225,7 @@
 <!--                   End dilters                     -->
 <!--<form action="schedule">-->
 
-<form  method="post" th:action="@{/admin/schedule-admin}" th:object="${filterFormDto}">
+<form method="post" th:action="@{/admin/schedule-admin}" th:object="${filterFormDto}">
 
 
     <li class="nav-item">
@@ -234,7 +240,7 @@
             <thead>
             <li>
                 <span>
-    <form th:action="@{/admin/schedule-admin(page=${page.number},size=${page.size},sort=id)}" method="post" >
+    <form th:action="@{/admin/schedule-admin(page=${page.number},size=${page.size},sort=id)}" method="post">
     <input type="hidden" name="page" th:value="${page.number}">
     <input type="hidden" name="size" th:value="${page.size}">
     <input type="hidden" th:field="*{movie}"/>
@@ -249,7 +255,8 @@
             </li>
             <li>
                 <span>
-                    <form th:action="@{/admin/schedule-admin(page=${page.number},size=${page.size}, sort=movieName)}" method="post">
+                    <form th:action="@{/admin/schedule-admin(page=${page.number},size=${page.size}, sort=movieName)}"
+                          method="post">
                <input type="hidden" name="page" th:value="${page.number}">
     <input type="hidden" name="size" th:value="${page.size}">
     <input type="hidden" th:field="*{movie}"/>
@@ -263,7 +270,8 @@
             </li>
             <li>
                 <span>
-                    <form th:action="@{/admin/schedule-admin(page=${page.number},size=${page.size}, sort=date)}" method="post">
+                    <form th:action="@{/admin/schedule-admin(page=${page.number},size=${page.size}, sort=date)}"
+                          method="post">
                   <input type="hidden" name="page" th:value="${page.number}">
     <input type="hidden" name="size" th:value="${page.size}">
     <input type="hidden" th:field="*{movie}"/>
@@ -278,7 +286,8 @@
             </li>
             <li>
                 <span>
-              <form th:action="@{/admin/schedule-admin(page=${page.number},size=${page.size}, sort=time)}"method="post">
+              <form th:action="@{/admin/schedule-admin(page=${page.number},size=${page.size}, sort=time)}"
+                    method="post">
                         <input type="hidden" name="page" th:value="${page.number}">
     <input type="hidden" name="size" th:value="${page.size}">
     <input type="hidden" th:field="*{movie}"/>

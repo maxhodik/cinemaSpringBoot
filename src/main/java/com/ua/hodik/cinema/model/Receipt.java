@@ -1,6 +1,10 @@
 package com.ua.hodik.cinema.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,8 +34,11 @@ public class Receipt {
     @Enumerated(EnumType.STRING)
     private State state;
     @Column(name = "number_of_seats")
+    @Min(value = 1)
+    @Max(value = 5)
     private int numberOfSeats;
     @Column(name = "price")
 //    @Value("${price}")
     private int price;
+
 }

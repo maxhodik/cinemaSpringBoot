@@ -48,9 +48,18 @@ public class ScheduleService {
     }
 
     public SessionAdminDto findById(int id) {
-        Session session = scheduleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Session not found"));
+        Session session = getSession(id);
         return convertToSessionAdminDto(session);
 
+    }
+    public Session findSessionById(int id){
+        Session session = getSession(id);
+        return session;
+    }
+
+    private Session getSession(int id) {
+        Session session = scheduleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Session not found"));
+        return session;
     }
 
     @Transactional
@@ -68,7 +77,7 @@ public class ScheduleService {
 
 
     public void delete(int id) {
-        Session session = scheduleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Session not found"));
+        Session session = getSession(id);
         session.setStatus(Status.CANCELED);
         scheduleRepository.save(session);
     }

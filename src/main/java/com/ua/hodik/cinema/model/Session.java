@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -31,8 +32,10 @@ public class Session {
     @JoinColumn(name = "hall_id", referencedColumnName = "id")
     private Hall hall;
     @Column(name = "date")
+    @DateTimeFormat (pattern = "yyyy/MM/dd")
     private LocalDate date;
     @Column(name = "time")
+    @DateTimeFormat (pattern = "hh:mm:ss")
     private LocalTime time;
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
@@ -49,6 +52,18 @@ public class Session {
         this.time = time;
         this.status = status;
 
+    }
+
+    @Override
+    public String toString() {
+        return "Session{" +
+                "id=" + id +
+                ", movie=" + movie +
+                ", hall=" + hall +
+                ", date=" + date +
+                ", time=" + time +
+                ", status=" + status +
+                '}';
     }
 
     @Override
