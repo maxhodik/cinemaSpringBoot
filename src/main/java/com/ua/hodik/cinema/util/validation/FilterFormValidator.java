@@ -1,4 +1,4 @@
-package com.ua.hodik.cinema.util;
+package com.ua.hodik.cinema.util.validation;
 
 import com.ua.hodik.cinema.dto.FilterFormDto;
 import com.ua.hodik.cinema.dto.MovieDto;

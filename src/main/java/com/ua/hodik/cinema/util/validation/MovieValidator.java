@@ -1,7 +1,6 @@
-package com.ua.hodik.cinema.util;
+package com.ua.hodik.cinema.util.validation;
 
 import com.ua.hodik.cinema.dto.MovieDto;
-import com.ua.hodik.cinema.model.Movie;
 import com.ua.hodik.cinema.services.MovieService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

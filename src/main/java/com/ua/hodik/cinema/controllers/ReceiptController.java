@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
@@ -54,33 +55,33 @@ public class ReceiptController {
 
     @PostMapping("/{id}")
     public String createReceipt(@ModelAttribute @Valid ReceiptDto receiptDto, BindingResult bindingResult, Model model) {
-        int id= receiptDto.getSessionId();
+        int id = receiptDto.getSessionId();
         SessionAdminDto sessionDto = scheduleService.findById(id);
-                if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("sessionAdminDto", sessionDto);
             return "receipt";
         }
-            receiptValidator.validate(receiptDto, bindingResult);
-            if (bindingResult.hasErrors()) {
-                model.addAttribute("sessionAdminDto", sessionDto);
-                return "receipt";
-            }
-            Receipt receipt;
-            try {
-                receipt = receiptService.submitReceipt(receiptDto);
-            } catch (NotEnoughAvailableSeats e) {
-                bindingResult.addError(new ObjectError("numberOfSeats", "Not enough available seats"));
-                model.addAttribute("sessionAdminDto", sessionDto);
-                return "receipt";
-            } catch (ReceiptNotCreatedException e) {
-                throw new RuntimeException(e);
-            }
-            return "redirect:/ticket/" + receipt.getId();
-
+        receiptValidator.validate(receiptDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("sessionAdminDto", sessionDto);
+            return "receipt";
         }
-
-        private UserDto convertToUserDto (User user){
-            return modelMapper.map(user, UserDto.class);
+        Receipt receipt;
+        try {
+            receipt = receiptService.submitReceipt(receiptDto);
+        } catch (NotEnoughAvailableSeats e) {
+            bindingResult.addError(new FieldError("receiptDto", "numberOfSeats", "Not enough available seats"));
+            model.addAttribute("sessionAdminDto", sessionDto);
+            return "receipt";
+        } catch (ReceiptNotCreatedException e) {
+            throw new RuntimeException(e);
         }
+        return "redirect:/ticket/" + receipt.getId();
 
     }
+
+    private UserDto convertToUserDto(User user) {
+        return modelMapper.map(user, UserDto.class);
+    }
+
+}

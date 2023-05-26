@@ -1,6 +1,7 @@
 package com.ua.hodik.cinema.dto;
 
 import com.ua.hodik.cinema.model.Status;
+import com.ua.hodik.cinema.util.validation.ValidTime;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,8 +25,12 @@ public class SessionAdminDto {
     private String movieName;
 
     @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @NotNull
+    @FutureOrPresent
     private LocalDate date;
     @DateTimeFormat(pattern = "hh:mm:ss")
+    @NotNull
+    @ValidTime
     private LocalTime time;
     private DayOfWeek dayOfWeek;
     private int hallId;

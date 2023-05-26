@@ -2,6 +2,9 @@ package com.ua.hodik.cinema.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,6 +36,7 @@ public class Session {
     private Hall hall;
     @Column(name = "date")
     @DateTimeFormat (pattern = "yyyy/MM/dd")
+
     private LocalDate date;
     @Column(name = "time")
     @DateTimeFormat (pattern = "hh:mm:ss")
