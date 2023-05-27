@@ -2,6 +2,7 @@ package com.ua.hodik.cinema.controllers;
 
 import com.ua.hodik.cinema.dto.FilterFormDto;
 import com.ua.hodik.cinema.dto.SessionAdminDto;
+import com.ua.hodik.cinema.model.Status;
 import com.ua.hodik.cinema.services.HallService;
 import com.ua.hodik.cinema.services.MovieService;
 import com.ua.hodik.cinema.services.ScheduleService;
@@ -15,9 +16,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin/schedule-admin")
@@ -26,6 +29,7 @@ public class ScheduleAdminController {
     private final MovieService movieService;
     private final HallService hallService;
     private final Validator filterFormValidator;
+
 
 
     @Autowired
@@ -37,10 +41,11 @@ public class ScheduleAdminController {
 
         this.hallService = hallService;
         this.filterFormValidator = filterFormValidator;
+
     }
 
     @GetMapping()
-    public String schedule( Model model,
+    public String schedule(Model model,
                            @RequestParam(value = "sort", defaultValue = "id,ASC") String sort,
                            @RequestParam(value = "page", defaultValue = "0") int page,
                            @RequestParam(value = "size", defaultValue = "5") int size) {
@@ -129,19 +134,24 @@ public class ScheduleAdminController {
 
 
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") int id, Model model) {
-        model.addAttribute("sessionAdminDto", scheduleService.findById(id));
+    public String edit(@PathVariable("id") int id, Model model, RedirectAttributes redirectAttributes) {
+        SessionAdminDto sessionDto = scheduleService.findById(id);
+        if (sessionDto.getNumberOfSoldSeats()>0 || sessionDto.getStatus() == Status.CANCELED) {
+            redirectAttributes.addFlashAttribute("editError", true);
+            return "redirect:/admin/schedule-admin";
+        }
+
+        model.addAttribute("sessionAdminDto", sessionDto);
         model.addAttribute("movieDto", movieService.findAll(null));
         return "admin/edit-session";
     }
 
     @RequestMapping("/edit-session")
-    public String editSession(@ModelAttribute("sessionAdminDto")@Valid SessionAdminDto sessionAdminDto, BindingResult bindingResult, Model model ) {
+    public String editSession(@ModelAttribute("sessionAdminDto") @Valid SessionAdminDto sessionAdminDto, BindingResult bindingResult, Model model) {
         int id = sessionAdminDto.getId();
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             model.addAttribute("movieDto", movieService.findAll(null));
             return "admin/edit-session";
-//            return  "forward:/admin/schedule-admin/edit/"+id;
         }
         scheduleService.update(sessionAdminDto);
         return "redirect:/admin/schedule-admin";
@@ -161,7 +171,7 @@ public class ScheduleAdminController {
 
     @PostMapping("/add-session")
     public String create(@ModelAttribute("sessionAdminDto") @Valid SessionAdminDto sessionAdminDto, BindingResult bindingResult, Model model) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             model.addAttribute("movieDto", movieService.findAll(null));
             return "admin/add-session";
         }

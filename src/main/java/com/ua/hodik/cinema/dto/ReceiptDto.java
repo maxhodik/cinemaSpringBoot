@@ -19,7 +19,7 @@ public class ReceiptDto {
 
     private int sessionId;
     @Min(value = 1)
-    @Max(value = 5)
+    @Max(value = 10)
     private int numberOfSeats;
 
     private int price;
